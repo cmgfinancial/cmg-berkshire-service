@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetLOInformationForOfficeID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="brand" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="officeID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLOInformationForOfficeIDResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetLOInformationForOfficeIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLOInformationForOfficeID" />
+  </wsdl:message>
+  <wsdl:message name="GetLOInformationForOfficeIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLOInformationForOfficeIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLOInformationForOfficeIDHttpGetIn">
+    <wsdl:part name="userName" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="brand" type="s:string" />
+    <wsdl:part name="officeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLOInformationForOfficeIDHttpGetOut" />
+  <wsdl:message name="GetLOInformationForOfficeIDHttpPostIn">
+    <wsdl:part name="userName" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="brand" type="s:string" />
+    <wsdl:part name="officeID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetLOInformationForOfficeIDHttpPostOut" />
+  <wsdl:portType name="lo_infoSoap">
+    <wsdl:operation name="GetLOInformationForOfficeID">
+      <wsdl:input message="tns:GetLOInformationForOfficeIDSoapIn" />
+      <wsdl:output message="tns:GetLOInformationForOfficeIDSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="lo_infoHttpGet">
+    <wsdl:operation name="GetLOInformationForOfficeID">
+      <wsdl:input message="tns:GetLOInformationForOfficeIDHttpGetIn" />
+      <wsdl:output message="tns:GetLOInformationForOfficeIDHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="lo_infoHttpPost">
+    <wsdl:operation name="GetLOInformationForOfficeID">
+      <wsdl:input message="tns:GetLOInformationForOfficeIDHttpPostIn" />
+      <wsdl:output message="tns:GetLOInformationForOfficeIDHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="lo_infoSoap" type="tns:lo_infoSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLOInformationForOfficeID">
+      <soap:operation soapAction="http://tempuri.org/GetLOInformationForOfficeID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="lo_infoSoap12" type="tns:lo_infoSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLOInformationForOfficeID">
+      <soap12:operation soapAction="http://tempuri.org/GetLOInformationForOfficeID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="lo_infoHttpGet" type="tns:lo_infoHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetLOInformationForOfficeID">
+      <http:operation location="/GetLOInformationForOfficeID" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="lo_infoHttpPost" type="tns:lo_infoHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetLOInformationForOfficeID">
+      <http:operation location="/GetLOInformationForOfficeID" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="lo_info">
+    <wsdl:port name="lo_infoSoap" binding="tns:lo_infoSoap">
+      <soap:address location="https://www.cmgfi.com/CMGWebservice/lo-info.asmx" />
+    </wsdl:port>
+    <wsdl:port name="lo_infoSoap12" binding="tns:lo_infoSoap12">
+      <soap12:address location="https://www.cmgfi.com/CMGWebservice/lo-info.asmx" />
+    </wsdl:port>
+    <wsdl:port name="lo_infoHttpGet" binding="tns:lo_infoHttpGet">
+      <http:address location="https://www.cmgfi.com/CMGWebservice/lo-info.asmx" />
+    </wsdl:port>
+    <wsdl:port name="lo_infoHttpPost" binding="tns:lo_infoHttpPost">
+      <http:address location="https://www.cmgfi.com/CMGWebservice/lo-info.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
