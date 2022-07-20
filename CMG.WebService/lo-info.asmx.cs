@@ -10,6 +10,7 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Data.Entity;
 using CMG.Database.CMGPortal.Models;
+using CMG.WebService.Model;
 
 namespace CMG.WebService
 {
@@ -213,5 +214,67 @@ namespace CMG.WebService
 
                     }
             }
+       
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void GetLOInformationByNMLS(string nmls)
+        {
+            try
+            {
+               
+                if (!string.IsNullOrEmpty(nmls))
+                {
+                    _logger.Debug("Inside");
+                    try
+                    {
+                        SearchResult result = new SearchResult();
+                        // Grab all retail agents from the database and crunch their info into an agent list.
+                        using (CMGPortalDbContext repo = new CMGPortalDbContext())
+                        {
+                            var member = repo.Members.FirstOrDefault(m => m.NMLS == nmls && m.ActiveStatus);
+                            var user = repo.Users.FirstOrDefault(u => u.ID == member.UserId);
+
+                            if (member != null)
+                            {
+                                string baseURL = "https://www.cmgfi.com/mysite/";
+                                var company = repo.Companies.FirstOrDefault(c => c.ID == user.CompanyID);
+                                if (company != null)
+                                {
+                                    dynamic jData = JsonConvert.DeserializeObject(company.PortalSettingsJson);
+                                    baseURL = jData.URL + "/mysite/";
+                                }
+                                result.MySiteURL = baseURL + member.MySitePath;
+                                result.ApplyNowURL = member.ApplyOnlineURL;
+                            }
+                            else
+                            {
+                                result.MySiteURL = "";
+                                result.ApplyNowURL = "";
+                            }
+
+                        }
+
+                        string json = JsonConvert.SerializeObject(new { results = result });
+                        HttpContext.Current.Response.ContentType = "text/HTML";
+                        HttpContext.Current.Response.Write(json);
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        _logger.Debug(" > CMG webservice::GetLOInformationByNMLS() exception: ", ex);
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Debug(" > CMG webservice::GetLOInformationByNMLS() exception: ", ex);
+
+            }
         }
+
+
+    }
 }
